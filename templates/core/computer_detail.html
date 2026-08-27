@@ -1,0 +1,234 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ computer.title }} - AiahTech{% endblock %}
+
+{% block content %}
+<style>
+    /* Lightbox Modal */
+    .lightbox-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.9);
+        cursor: pointer;
+    }
+
+    .lightbox-modal .close-lightbox {
+        position: absolute;
+        top: 20px;
+        right: 40px;
+        color: #fff;
+        font-size: 50px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10000;
+    }
+
+    .lightbox-modal .close-lightbox:hover {
+        color: #4ade80;
+    }
+
+    .lightbox-modal img {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    }
+</style>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'computers' %}">Computers</a></li>
+            <li class="breadcrumb-item active">{{ computer.title }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                {% if computer.main_image %}
+                <img src="{{ computer.main_image.url }}" class="card-img-top img-fluid" alt="{{ computer.title }}">
+                {% endif %}
+            </div>
+            <div class="row mt-2">
+                {% if computer.image_2 %}
+                <div class="col-3">
+                    <img src="{{ computer.image_2.url }}" class="img-fluid rounded" style="height: 80px; object-fit: cover; cursor: pointer;">
+                </div>
+                {% endif %}
+                {% if computer.image_3 %}
+                <div class="col-3">
+                    <img src="{{ computer.image_3.url }}" class="img-fluid rounded" style="height: 80px; object-fit: cover; cursor: pointer;">
+                </div>
+                {% endif %}
+                {% if computer.image_4 %}
+                <div class="col-3">
+                    <img src="{{ computer.image_4.url }}" class="img-fluid rounded" style="height: 80px; object-fit: cover; cursor: pointer;">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h2>{{ computer.title }}</h2>
+            <p class="text-muted">{{ computer.brand|title }} • {{ computer.year }}</p>
+            
+            <div class="mb-3">
+                <span class="badge {% if computer.status == 'available' %}bg-success{% else %}bg-danger{% endif %} fs-6">
+                    {{ computer.get_status_display }}
+                </span>
+                <span class="badge bg-info fs-6">{{ computer.get_condition_display }}</span>
+                {% if computer.is_featured %}
+                <span class="badge bg-warning fs-6">⭐ Featured</span>
+                {% endif %}
+            </div>
+            
+            <h2 class="text-success">le{{ computer.price }}</h2>
+            {% if computer.original_price %}
+            <p class="text-muted"><del>Original: le{{ computer.original_price }}</del></p>
+            {% endif %}
+            
+            <hr>
+
+            <h5>📋 Specifications</h5>
+            <table class="table table-sm table-striped">
+                <tr><td><strong>Processor</strong></td><td>{{ computer.processor }}</td></tr>
+                <tr><td><strong>RAM</strong></td><td>{{ computer.ram }}</td></tr>
+                <tr><td><strong>Storage</strong></td><td>{{ computer.storage }}</td></tr>
+                <tr><td><strong>Screen</strong></td><td>{{ computer.screen_size }}</td></tr>
+                <tr><td><strong>Battery</strong></td><td>{{ computer.battery_life|default:"N/A" }}</td></tr>
+                <tr><td><strong>Operating System</strong></td><td>{{ computer.get_operating_system_display }}</td></tr>
+                <tr><td><strong>Year</strong></td><td>{{ computer.year }}</td></tr>
+                <tr><td><strong>Quantity</strong></td><td>{{ computer.quantity_available }}</td></tr>
+            </table>
+
+            {% if computer.description %}
+            <h5>📝 Description</h5>
+            <p>{{ computer.description }}</p>
+            {% endif %}
+
+            {% if computer.condition_description %}
+            <div class="alert alert-warning">
+                <strong>📝 Condition Notes:</strong><br>
+                {{ computer.condition_description }}
+            </div>
+            {% endif %}
+
+            <!-- Features - Simple text -->
+            {% if computer.features %}
+            <h5>✨ Features</h5>
+            <ul>
+                {% for feature in computer.get_features_list %}
+                <li>{{ feature }}</li>
+                {% empty %}
+                <li>{{ computer.features }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <!-- Accessories - Simple text -->
+            {% if computer.accessories %}
+            <h5>📦 Included Accessories</h5>
+            <ul>
+                {% for accessory in computer.get_accessories_list %}
+                <li>{{ accessory }}</li>
+                {% empty %}
+                <li>{{ computer.accessories }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if computer.status == 'available' %}
+            <div class="mt-4">
+                <button class="btn btn-inquire btn-lg w-100" data-bs-toggle="modal" data-bs-target="#inquireModal">
+                    <i class="fas fa-envelope"></i> Inquire About This Computer
+                </button>
+            </div>
+            {% else %}
+            <div class="alert alert-danger mt-3">
+                <strong>⚠️ This computer is no longer available</strong>
+            </div>
+            {% endif %}
+
+            <div class="mt-3">
+                <small class="text-muted">Added: {{ computer.added_date|date:"F d, Y" }}</small>
+            </div>
+        </div>
+    </div>
+
+    {% if similar %}
+    <h3 class="mt-5">🔄 Similar Computers</h3>
+    <div class="row">
+        {% for comp in similar %}
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card h-100">
+                {% if comp.main_image %}
+                <img src="{{ comp.main_image.url }}" class="card-img-top" style="height: 150px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title">{{ comp.title|truncatechars:20 }}</h6>
+                    <p class="fw-bold text-success">le{{ comp.price }}</p>
+                    <a href="{% url 'computer_detail' comp.id %}" class="btn btn-sm btn-outline-primary w-100">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Inquiry Modal -->
+<div class="modal fade" id="inquireModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #4ade80;">
+                <h5 class="modal-title">📩 Inquire About {{ computer.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{% url 'inquire_computer' computer.id %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Your Name *</label>
+                        <input type="text" name="name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" name="phone" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Your Budget</label>
+                        <input type="number" name="budget" class="form-control" placeholder="Optional">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Message *</label>
+                        <textarea name="message" class="form-control" rows="4" required 
+                            placeholder="I'm interested in this computer. Can you tell me more about..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Send Inquiry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

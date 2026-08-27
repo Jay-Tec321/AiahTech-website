@@ -1,0 +1,128 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Computers for Sale - AiahTech{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-4">🖥️ Computers for Sale</h1>
+    <p class="text-center text-muted mb-5">Quality computers at great prices. Inquire about any computer you're interested in!</p>
+    
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <form method="GET" class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="search" class="form-control" placeholder="Search computers..." value="{{ search_query }}">
+            </div>
+            <div class="col-md-2">
+                <select name="brand" class="form-select">
+                    <option value="">All Brands</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand }}" {% if current_brand == brand %}selected{% endif %}>
+                        {{ brand|title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="condition" class="form-select">
+                    <option value="">All Conditions</option>
+                    {% for condition in conditions %}
+                    <option value="{{ condition }}" {% if current_condition == condition %}selected{% endif %}>
+                        {{ condition|title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="os" class="form-select">
+                    <option value="">All OS</option>
+                    {% for os in oss %}
+                    <option value="{{ os }}" {% if current_os == os %}selected{% endif %}>
+                        {{ os|title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+            </div>
+            <div class="col-md-1">
+                <a href="{% url 'computers' %}" class="btn btn-secondary w-100">Reset</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Computer Grid -->
+    <div class="row">
+        {% for computer in computers %}
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card h-100">
+                {% if computer.main_image %}
+                <img src="{{ computer.main_image.url }}" class="card-img-top" alt="{{ computer.title }}">
+                {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <span style="font-size: 50px;">💻</span>
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="card-title">{{ computer.title }}</h6>
+                    <p class="text-muted small">{{ computer.brand|title }} • {{ computer.year }}</p>
+                    <p class="card-text">
+                        <span class="fw-bold text-success">${{ computer.price }}</span>
+                    </p>
+                    <p class="card-text small">
+                        <i class="fas fa-microchip"></i> {{ computer.processor|truncatechars:30 }}<br>
+                        <i class="fas fa-memory"></i> {{ computer.ram }} • <i class="fas fa-hdd"></i> {{ computer.storage }}
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge {% if computer.status == 'available' %}bg-success{% else %}bg-danger{% endif %}">
+                            {{ computer.get_status_display }}
+                        </span>
+                        <span class="badge bg-info">{{ computer.get_condition_display }}</span>
+                        {% if computer.is_featured %}
+                        <span class="badge bg-warning">⭐ Featured</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                    <a href="{% url 'computer_detail' computer.id %}" class="btn btn-primary w-100">
+                        <i class="fas fa-eye"></i> View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h3>😕 No computers available right now</h3>
+            <p class="text-muted">Check back later for new listings!</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if computers.has_other_pages %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if computers.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ computers.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            
+            {% for num in computers.paginator.page_range %}
+            <li class="page-item {% if computers.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+            
+            {% if computers.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ computers.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

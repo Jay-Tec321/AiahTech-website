@@ -1,0 +1,159 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ app.name }} - AiahTech{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'apps' %}">Apps</a></li>
+            <li class="breadcrumb-item active">{{ app.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-4 text-center">
+            {% if app.app_icon %}
+            <img src="{{ app.app_icon.url }}" alt="{{ app.name }}" style="width: 200px; height: 200px; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            {% else %}
+            <div style="font-size: 120px;">📱</div>
+            {% endif %}
+            
+            <div class="mt-3">
+                <span class="badge {% if app.status == 'active' %}bg-success{% elif app.status == 'beta' %}bg-warning{% else %}bg-secondary{% endif %} fs-6">
+                    {{ app.get_status_display }}
+                </span>
+                {% if app.is_featured %}
+                <span class="badge bg-warning fs-6">⭐ Featured</span>
+                {% endif %}
+            </div>
+            
+            <div class="mt-4">
+                <a href="{% url 'download_app' app.slug %}" class="btn btn-success btn-lg w-100">
+                    <i class="fas fa-download"></i> Download v{{ app.version }}
+                </a>
+                <small class="text-muted d-block mt-2">
+                    <i class="fas fa-download"></i> {{ app.download_count }} total downloads
+                </small>
+                {% if app.file_size %}
+                <small class="text-muted">File size: {{ app.file_size }}</small>
+                {% endif %}
+            </div>
+            
+            {% if app.price and not app.is_free %}
+            <div class="mt-3">
+                <h4 class="text-success">${{ app.price }}</h4>
+            </div>
+            {% else %}
+            <div class="mt-3">
+                <span class="badge bg-success fs-6">Free</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-md-8">
+            <h2>{{ app.name }}</h2>
+            <p class="text-muted">Version {{ app.version }} • {{ app.get_platform_display }}</p>
+            <p class="text-muted">Released: {{ app.release_date|date:"F d, Y" }}</p>
+            
+            <hr>
+            
+            <h5>📝 Description</h5>
+            <p>{{ app.description|linebreaks }}</p>
+            
+            {% if app.get_features_list %}
+            <h5>✨ Key Features</h5>
+            <ul>
+                {% for feature in app.get_features_list %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            
+            {% if app.latest_release_notes %}
+            <div class="alert alert-info">
+                <h5>📢 What's New in v{{ app.version }}</h5>
+                <p>{{ app.latest_release_notes|linebreaks }}</p>
+            </div>
+            {% endif %}
+            
+            {% if app.requirements %}
+            <h5>📋 System Requirements</h5>
+            <p>{{ app.requirements|linebreaks }}</p>
+            {% endif %}
+            
+            {% if app.supported_languages %}
+            <h5>🌍 Supported Languages</h5>
+            <p>{{ app.supported_languages }}</p>
+            {% endif %}
+            
+            <!-- Links -->
+            <div class="mt-4">
+                {% if app.website_url %}
+                <a href="{{ app.website_url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="fas fa-globe"></i> Website
+                </a>
+                {% endif %}
+                {% if app.documentation_url %}
+                <a href="{{ app.documentation_url }}" target="_blank" class="btn btn-outline-info btn-sm">
+                    <i class="fas fa-book"></i> Documentation
+                </a>
+                {% endif %}
+                {% if app.github_url %}
+                <a href="{{ app.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                {% endif %}
+            </div>
+            
+            <!-- Support -->
+            <div class="mt-4 p-3 bg-light rounded">
+                <h6>📧 Need Help?</h6>
+                {% if app.support_email %}
+                <p>Email: <a href="mailto:{{ app.support_email }}">{{ app.support_email }}</a></p>
+                {% endif %}
+                {% if app.support_phone %}
+                <p>Phone: {{ app.support_phone }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Screenshots -->
+    {% if app.screenshots %}
+    <h3 class="mt-5">📸 Screenshots</h3>
+    <div class="row">
+        {% for screenshot in app.screenshots %}
+        <div class="col-md-3 mb-3">
+            <img src="{{ screenshot }}" class="img-fluid rounded shadow" style="height: 200px; object-fit: cover; width: 100%;">
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Related Apps -->
+    {% if related_apps %}
+    <h3 class="mt-5">🔄 Similar Apps</h3>
+    <div class="row">
+        {% for related in related_apps %}
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    {% if related.app_icon %}
+                    <img src="{{ related.app_icon.url }}" style="width: 50px; height: 50px; border-radius: 10px;">
+                    {% else %}
+                    <span style="font-size: 30px;">📱</span>
+                    {% endif %}
+                    <h6 class="mt-2">{{ related.name }}</h6>
+                    <p class="text-muted small">v{{ related.version }}</p>
+                    <a href="{% url 'app_detail' related.slug %}" class="btn btn-sm btn-outline-primary">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
