@@ -1005,7 +1005,7 @@ def home(request):
                 </div>
             </div>
             
-            <div class="status"><i></i> Django 4.2.7 • System Ready • AiahTech v1.0</div>
+            <div class="status"><i></i> AiahTech </div>
         </div>
 
         {js_script}
