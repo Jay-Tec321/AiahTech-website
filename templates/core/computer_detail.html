@@ -46,7 +46,35 @@
         border-radius: 10px;
         box-shadow: 0 0 50px rgba(0,0,0,0.5);
     }
+
+    .btn-whatsapp {
+        background: #25D366;
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-whatsapp:hover {
+        background: #1da851;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .btn-inquire {
+        background: #4ade80;
+        color: #1a1a2e;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-inquire:hover {
+        background: #22c55e;
+        color: #1a1a2e;
+        transform: translateY(-2px);
+    }
 </style>
+
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -96,9 +124,9 @@
                 {% endif %}
             </div>
             
-            <h2 class="text-success">le{{ computer.price }}</h2>
+            <h2 class="text-success">Le {{ computer.price }}</h2>
             {% if computer.original_price %}
-            <p class="text-muted"><del>Original: le{{ computer.original_price }}</del></p>
+            <p class="text-muted"><del>Original: Le {{ computer.original_price }}</del></p>
             {% endif %}
             
             <hr>
@@ -151,11 +179,20 @@
             </ul>
             {% endif %}
 
+            <!-- ===== INQUIRY BUTTONS ===== -->
             {% if computer.status == 'available' %}
             <div class="mt-4">
-                <button class="btn btn-inquire btn-lg w-100" data-bs-toggle="modal" data-bs-target="#inquireModal">
+                <!-- Email Inquiry Button -->
+                <button class="btn btn-inquire btn-lg w-100 mb-2" data-bs-toggle="modal" data-bs-target="#inquireModal">
                     <i class="fas fa-envelope"></i> Inquire About This Computer
                 </button>
+                
+                <!-- WhatsApp Inquiry Button -->
+                <a href="https://wa.me/23279174763?text=Hello%20AiahTech%2C%20I%20am%20interested%20in%20{{ computer.title }}%20which%20is%20priced%20at%20Le%20{{ computer.price }}.%20Please%20tell%20me%20more%20about%20it." 
+                   target="_blank" 
+                   class="btn btn-whatsapp btn-lg w-100">
+                    <i class="fab fa-whatsapp"></i> Inquire via WhatsApp
+                </a>
             </div>
             {% else %}
             <div class="alert alert-danger mt-3">
@@ -169,6 +206,7 @@
         </div>
     </div>
 
+    <!-- Similar Computers -->
     {% if similar %}
     <h3 class="mt-5">🔄 Similar Computers</h3>
     <div class="row">
@@ -180,7 +218,7 @@
                 {% endif %}
                 <div class="card-body">
                     <h6 class="card-title">{{ comp.title|truncatechars:20 }}</h6>
-                    <p class="fw-bold text-success">le{{ comp.price }}</p>
+                    <p class="fw-bold text-success">Le {{ comp.price }}</p>
                     <a href="{% url 'computer_detail' comp.id %}" class="btn btn-sm btn-outline-primary w-100">View</a>
                 </div>
             </div>
@@ -231,4 +269,40 @@
         </div>
     </div>
 </div>
+
+<!-- Lightbox Modal -->
+<div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
+    <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImage" src="" alt="Zoomed Image">
+</div>
+
+<script>
+    // Open Lightbox
+    function openLightbox(imageSrc) {
+        document.getElementById('lightboxModal').style.display = 'block';
+        document.getElementById('lightboxImage').src = imageSrc;
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close Lightbox
+    function closeLightbox() {
+        document.getElementById('lightboxModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+
+    // Image click handlers
+    document.querySelectorAll('.card-img-top, .img-fluid.rounded').forEach(function(img) {
+        img.addEventListener('click', function() {
+            openLightbox(this.src);
+        });
+    });
+</script>
+
 {% endblock %}
