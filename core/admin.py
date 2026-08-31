@@ -90,11 +90,10 @@ class AppAdmin(admin.ModelAdmin):
     list_filter = ['platform', 'status', 'is_free', 'is_featured']
     search_fields = ['name', 'description', 'features', 'version']
     readonly_fields = ['download_count', 'created_at', 'last_updated']
-    prepopulated_fields = {'slug': ('name',)}
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'slug', 'platform', 'version', 'status')
+            'fields': ('name', 'platform', 'version', 'status')
         }),
         ('Description', {
             'fields': ('short_description', 'description', 'features')
@@ -102,17 +101,11 @@ class AppAdmin(admin.ModelAdmin):
         ('Download File', {
             'fields': ('download_file', 'file_size', 'download_count', 'latest_release_notes')
         }),
-        ('Media', {
-            'fields': ('app_icon', 'banner_image', 'screenshots')
-        }),
         ('Pricing', {
             'fields': ('is_free', 'price')
         }),
         ('Requirements', {
             'fields': ('requirements', 'supported_languages')
-        }),
-        ('Links', {
-            'fields': ('website_url', 'documentation_url', 'github_url')
         }),
         ('Support', {
             'fields': ('support_email', 'support_phone')
