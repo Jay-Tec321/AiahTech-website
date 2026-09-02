@@ -224,3 +224,22 @@ class Graphics(models.Model):
     
     def __str__(self):
         return f"{self.title} - {self.get_category_display()}"
+
+
+class Visitor(models.Model):
+    ip_address = models.GenericIPAddressField()
+    session_key = models.CharField(max_length=40, blank=True, null=True)
+    user_agent = models.TextField(blank=True)
+    referer = models.URLField(blank=True, null=True)
+    page_visited = models.CharField(max_length=500)
+    method = models.CharField(max_length=10, default='GET')
+    is_unique = models.BooleanField(default=True)
+    visited_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-visited_at']
+        verbose_name = "Visitor"
+        verbose_name_plural = "Visitors"
+    
+    def __str__(self):
+        return f"{self.ip_address} - {self.page_visited} - {self.visited_at.strftime('%Y-%m-%d %H:%M')}"

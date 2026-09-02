@@ -1,5 +1,5 @@
 ﻿from django.contrib import admin
-from .models import Computer, ComputerInquiry, App, Graphics
+from .models import Computer, ComputerInquiry, App, Graphics, Visitor
 
 class ComputerAdmin(admin.ModelAdmin):
     list_display = ['title', 'brand', 'price', 'status', 'quantity_available', 'added_date']
@@ -176,3 +176,18 @@ admin.site.register(Computer, ComputerAdmin)
 admin.site.register(ComputerInquiry, ComputerInquiryAdmin)
 admin.site.register(App, AppAdmin)
 admin.site.register(Graphics, GraphicsAdmin)
+
+
+class VisitorAdmin(admin.ModelAdmin):
+    list_display = ['ip_address', 'page_visited', 'is_unique', 'visited_at']
+    list_filter = ['is_unique', 'visited_at']
+    search_fields = ['ip_address', 'page_visited']
+    readonly_fields = ['ip_address', 'session_key', 'user_agent', 'referer', 'page_visited', 'method', 'is_unique', 'visited_at']
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+
+admin.site.register(Visitor, VisitorAdmin)
