@@ -1,12 +1,12 @@
-﻿from django.contrib import admin
-from .models import Computer, ComputerInquiry, App, Graphics
+from django.contrib import admin
+from .models import Computer, ComputerInquiry, App, Graphics, Visitor
 
 class ComputerAdmin(admin.ModelAdmin):
     list_display = ['title', 'brand', 'price', 'status', 'quantity_available', 'added_date']
     list_filter = ['brand', 'status', 'condition', 'operating_system']
     search_fields = ['title', 'brand', 'model', 'processor', 'description']
     readonly_fields = ['added_date', 'updated_date']
-    
+
     fieldsets = (
         ('Basic Information', {
             'fields': ('title', 'brand', 'model', 'condition', 'price', 'original_price')
@@ -32,17 +32,17 @@ class ComputerAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     actions = ['mark_as_available', 'mark_as_sold', 'mark_as_featured']
-    
+
     def mark_as_available(self, request, queryset):
         queryset.update(status='available')
     mark_as_available.short_description = "Mark selected computers as Available"
-    
+
     def mark_as_sold(self, request, queryset):
         queryset.update(status='sold')
     mark_as_sold.short_description = "Mark selected computers as Sold"
-    
+
     def mark_as_featured(self, request, queryset):
         queryset.update(is_featured=True)
     mark_as_featured.short_description = "Mark selected computers as Featured"
@@ -53,7 +53,7 @@ class ComputerInquiryAdmin(admin.ModelAdmin):
     list_filter = ['status', 'preferred_contact']
     search_fields = ['client_name', 'client_email', 'client_phone', 'message']
     readonly_fields = ['created_at', 'ip_address', 'user_agent']
-    
+
     fieldsets = (
         ('Inquiry Details', {
             'fields': ('computer', 'client_name', 'client_email', 'client_phone', 'message')
@@ -69,17 +69,17 @@ class ComputerInquiryAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     actions = ['mark_as_read', 'mark_as_replied', 'mark_as_interested']
-    
+
     def mark_as_read(self, request, queryset):
         queryset.update(status='read')
     mark_as_read.short_description = "Mark as Read"
-    
+
     def mark_as_replied(self, request, queryset):
         queryset.update(status='replied')
     mark_as_replied.short_description = "Mark as Replied"
-    
+
     def mark_as_interested(self, request, queryset):
         queryset.update(status='interested')
     mark_as_interested.short_description = "Mark as Interested"
@@ -90,7 +90,7 @@ class AppAdmin(admin.ModelAdmin):
     list_filter = ['platform', 'status', 'is_free', 'is_featured']
     search_fields = ['name', 'description', 'features', 'version']
     readonly_fields = ['download_count', 'created_at', 'last_updated']
-    
+
     fieldsets = (
         ('Basic Information', {
             'fields': ('name', 'platform', 'version', 'status')
@@ -98,6 +98,11 @@ class AppAdmin(admin.ModelAdmin):
         ('Description', {
             'fields': ('short_description', 'description', 'features')
         }),
+
+        ('App Icon', {
+            'fields': ('app_icon',)
+        }),
+
         ('Download File', {
             'fields': ('download_file', 'file_size', 'download_count', 'latest_release_notes')
         }),
@@ -118,21 +123,21 @@ class AppAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     actions = ['mark_as_featured', 'mark_as_active', 'mark_as_beta', 'mark_as_inactive']
-    
+
     def mark_as_featured(self, request, queryset):
         queryset.update(is_featured=True)
     mark_as_featured.short_description = "⭐ Mark as Featured"
-    
+
     def mark_as_active(self, request, queryset):
         queryset.update(status='active')
     mark_as_active.short_description = "✅ Mark as Active"
-    
+
     def mark_as_beta(self, request, queryset):
         queryset.update(status='beta')
     mark_as_beta.short_description = "🧪 Mark as Beta"
-    
+
     def mark_as_inactive(self, request, queryset):
         queryset.update(status='inactive')
     mark_as_inactive.short_description = "❌ Mark as Inactive"
@@ -143,7 +148,7 @@ class GraphicsAdmin(admin.ModelAdmin):
     list_filter = ['category', 'is_featured']
     search_fields = ['title', 'description']
     readonly_fields = ['created_at', 'updated_at']
-    
+
     fieldsets = (
         ('Basic Information', {
             'fields': ('title', 'category', 'description')
@@ -159,16 +164,29 @@ class GraphicsAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     actions = ['mark_as_featured', 'mark_as_normal']
-    
+
     def mark_as_featured(self, request, queryset):
         queryset.update(is_featured=True)
     mark_as_featured.short_description = "⭐ Mark as Featured"
-    
+
     def mark_as_normal(self, request, queryset):
         queryset.update(is_featured=False)
     mark_as_normal.short_description = "Mark as Normal"
+
+
+class VisitorAdmin(admin.ModelAdmin):
+    list_display = ['ip_address', 'page_visited', 'is_unique', 'visited_at']
+    list_filter = ['is_unique', 'visited_at']
+    search_fields = ['ip_address', 'page_visited']
+    readonly_fields = ['ip_address', 'session_key', 'user_agent', 'referer', 'page_visited', 'method', 'is_unique', 'visited_at']
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 # Register all models
@@ -176,3 +194,4 @@ admin.site.register(Computer, ComputerAdmin)
 admin.site.register(ComputerInquiry, ComputerInquiryAdmin)
 admin.site.register(App, AppAdmin)
 admin.site.register(Graphics, GraphicsAdmin)
+admin.site.register(Visitor, VisitorAdmin)
