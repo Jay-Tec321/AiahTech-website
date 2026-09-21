@@ -783,7 +783,7 @@ def home(request):
                 </a>
             </div>
             
-            <p class="subtitle">Advanced Technology Solutions for Modern Business</p>
+            <p class="subtitle">Advanced Technology Solutions</p>
             
             <div class="btn-group">
                 <a href="/about/" class="btn btn-outline">📖 Learn More</a>
@@ -1100,15 +1100,14 @@ def about(request):
     <body>
         <div class="container">
             <h2>About AiahTech</h2>
-            <p class="subtitle">Advanced Technology Solutions for Modern Business</p>
+            <p class="subtitle">Advanced Technology Solutions</p>
             
             <div class="about-text">
                 <p>AiahTech is owned by Joseph Aiah Gbonia 
-                a Technology Scientist, researcher live in sierra leone. AiahTech is a technology solutions provider dedicated to transforming ideas into innovative digital experiences,
+                a Technology Scientist and more live in sierra leone. AiahTech is a technology solutions provider dedicated to transforming ideas into innovative digital experiences,
                 problem solving with the influence of technology ideas and more.</p>
                 <br>
-                <p>Our goal is to spread your business to reach out to customers 
-                withe the help of technology and create awearness regards technology to the world including the remote areas, 
+                <p>Our goal is to create awearness regards technology to the world including the remote areas, 
                 ensuring humans living on earth become more simple and interesting</p>
                 <h2>Direct phone contact</h2>
                 <p>+23279174763</p>
