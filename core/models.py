@@ -1,4 +1,4 @@
-﻿from django.db import models
+from django.db import models
 from django.utils import timezone
 
 class Computer(models.Model):
@@ -224,7 +224,6 @@ class Graphics(models.Model):
     
     def __str__(self):
         return f"{self.title} - {self.get_category_display()}"
-
 
 class Visitor(models.Model):
     ip_address = models.GenericIPAddressField()

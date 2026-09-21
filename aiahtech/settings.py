@@ -1,4 +1,4 @@
-﻿import os
+import os
 from pathlib import Path
 from decouple import config
 
@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    
+
     'crispy_forms',
     'ckeditor',
     'rest_framework',
@@ -126,6 +126,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SITE_ID = 1
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+# ===== ADMIN HEADER =====
+ADMIN_SITE_HEADER = "AiahTech Admin"
+ADMIN_SITE_TITLE = "AiahTech Admin"
+ADMIN_INDEX_TITLE = "AiahTech Administration"
 
 
 
