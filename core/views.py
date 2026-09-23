@@ -462,10 +462,8 @@ def home(request):
             
             .section {{
                 margin-top: 40px;
-                background: rgba(255,255,255,0.08);
                 border-radius: 20px;
                 padding: 40px;
-                border: 1px solid rgba(255,255,255,0.1);
             }}
             .section h2 {{
                 font-size: 36px;
@@ -479,8 +477,6 @@ def home(request):
                 margin: 30px auto;
                 overflow: hidden;
                 border-radius: 15px;
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-                background: rgba(0, 0, 0, 0.4);
                 min-height: 450px;
                 padding: 0 10px;
             }}
