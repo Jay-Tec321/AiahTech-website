@@ -256,9 +256,9 @@ def home(request):
                 background: #2d2d2d;
                 min-height: 100vh;
                 color: white;
-                padding: 20px;
+                padding: 0;
             }}
-            .container {{ max-width: 1400px; width: 100%; margin: 0 auto; text-align: center; }}
+            .container {{ width: 100%; margin: 0; padding: 0 30px; text-align: center; }}
             
             /* ===== TOP BAR ===== */
             .top-bar {{
@@ -462,8 +462,8 @@ def home(request):
             
             .section {{
                 margin-top: 40px;
-                border-radius: 20px;
-                padding: 40px;
+                padding: 20px 10px;
+                width: 100%;
             }}
             .section h2 {{
                 font-size: 36px;
