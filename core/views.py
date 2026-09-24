@@ -474,11 +474,11 @@ def home(request):
                 position: relative;
                 max-width: 100%;
                 width: 100%;
-                margin: 30px auto;
+                margin: 20px auto;
                 overflow: hidden;
                 border-radius: 15px;
-                min-height: 550px;
-                padding: 0 10px;
+                min-height: auto;
+                padding: 10px;
             }}
             
             .computer-slide {{
@@ -497,38 +497,48 @@ def home(request):
             .computer-slide-content {{
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                padding: 20px 30px;
-                gap: 50px;
+                justify-content: center;
+                padding: 20px;
+                gap: 30px;
                 width: 100%;
                 max-width: 100%;
+                flex-wrap: wrap;
             }}
             
-            .computer-slide-image {{ flex: 1; min-height: 300px; }}
+            .computer-slide-image {{ 
+                flex: 1; 
+                min-width: 300px;
+                max-width: 50%;
+            }}
             .computer-slide-image img {{
                 width: 100%;
-                height: 450px;
+                height: 400px;
                 object-fit: contain;
                 border-radius: 10px;
             }}
             
-            .computer-slide-info {{ flex: 1.5; text-align: left; padding: 20px 40px; min-width: 400px; }}
-            .computer-slide-info h3 {{ font-size: 38px; margin-bottom: 15px; }}
-            .computer-slide-info .brand {{ opacity: 0.7; font-size: 18px; margin-bottom: 15px; }}
-            .computer-slide-info .specs {{ opacity: 0.85; font-size: 17px; margin: 15px 0; line-height: 2; }}
-            .computer-slide-info .price {{ font-size: 40px; font-weight: 700; color: #4ade80; margin: 20px 0; }}
-            .computer-slide-info .btn-view {{
-                display: inline-block;
-                padding: 15px 40px;
-                background: #4ade80;
-                color: #1a1a2e;
-                text-decoration: none;
-                border-radius: 30px;
-                font-weight: 600;
-                font-size: 18px;
-                transition: all 0.3s ease;
+            .computer-slide-info {{ 
+                flex: 1; 
+                text-align: left; 
+                padding: 20px; 
+                min-width: 300px;
+                max-width: 50%;
             }}
-            .computer-slide-info .btn-view:hover {{ background: #22c55e; transform: translateX(5px); }}
+            .computer-slide-info h3 {{ font-size: 26px; margin-bottom: 10px; }}
+            .computer-slide-info .brand {{ opacity: 0.7; font-size: 15px; margin-bottom: 10px; }}
+            .computer-slide-info .specs {{ opacity: 0.85; font-size: 14px; margin: 10px 0; line-height: 1.8; }}
+            .computer-slide-info .price {{ font-size: 28px; font-weight: 700; color: #4ade80; margin: 12px 0; }}
+            .computer-slide-info .btn-view {{
+            display: inline-block;
+            padding: 12px 30px;
+            background: #4ade80;
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            }}
             
             .computer-controls {{
                 position: absolute;
