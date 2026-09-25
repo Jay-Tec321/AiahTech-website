@@ -746,12 +746,42 @@ def home(request):
                 .section {{ padding: 15px 5px; }}
                 .computer-slide-content {{
                     flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
                     padding: 10px;
                     gap: 20px;
                 }}
-                .computer-slide-image {{ max-width: 100%; }}
-                .computer-slide-image img {{ height: 220px; }}
-                .computer-slide-info {{ max-width: 100%; padding: 10px; }}
+                .computer-slide-image {{
+                    max-width: 100%;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 auto;
+                }}
+                .computer-slide-image img {{
+                    height: 220px;
+                    max-width: 100%;
+                    margin: 0 auto;
+                    display: block;
+                }}
+                .computer-slide-info {{
+                    max-width: 100%;
+                    width: 100%;
+                    padding: 10px;
+                    text-align: center;
+                }}
+                .computer-slide-info h3,
+                .computer-slide-info .brand,
+                .computer-slide-info .specs,
+                .computer-slide-info .price {{
+                    text-align: center;
+                }}
+                .computer-slide-info .btn-view {{
+                    margin: 10px auto;
+                    display: inline-block;
+                }}              
                 .computer-slide-info h3 {{ font-size: 20px; }}
                 .computer-slide-info .price {{ font-size: 22px; }}
                 .computer-slide-info .specs {{ font-size: 13px; }}
