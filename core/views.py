@@ -775,8 +775,8 @@ def home(request):
                     position: relative;
                     max-width: 100%;
                     width: 100%;
-                    margin: 10px auto;
-                    padding: 10px 50px;
+                    margin: 10px 0;
+                    padding: 10px 0;
                     overflow: visible;
                     box-sizing: border-box;
                 }}
@@ -792,14 +792,10 @@ def home(request):
                 .computer-slide.active {{ display: block; }}
 
                 .computer-slide-content {{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
+                    display: block;
                     text-align: center;
-                    padding: 0;
-                    margin: 0;
-                    gap: 12px;
+                    padding: 0 10px;
+                    margin: 0 auto;
                     width: 100%;
                     max-width: 100%;
                     box-sizing: border-box;
@@ -808,19 +804,17 @@ def home(request):
                 .computer-slide-image {{
                     width: 100%;
                     max-width: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
                     margin: 0 auto;
                     padding: 0;
+                    text-align: center;
                 }}
 
                 .computer-slide-image img {{
                     height: 200px;
                     width: auto;
-                    max-width: 100%;
+                    max-width: 90%;
                     margin: 0 auto;
-                    display: block;
+                    display: inline-block;
                     border-radius: 10px;
                     object-fit: contain;
                 }}
@@ -828,7 +822,7 @@ def home(request):
                 .computer-slide-info {{
                     max-width: 100%;
                     width: 100%;
-                    padding: 0 5px;
+                    padding: 0 15px;
                     margin: 0 auto;
                     text-align: center;
                     box-sizing: border-box;
