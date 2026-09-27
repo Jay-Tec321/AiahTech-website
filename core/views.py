@@ -734,7 +734,7 @@ def home(request):
                 border-radius: 50%;
                 margin-right: 8px;
             }}
-            
+
             @media (max-width: 600px) {{
                 .container {{ padding: 0 10px; }}
                 .subtitle {{ font-size: 18px; }}
@@ -744,14 +744,21 @@ def home(request):
                 .whatsapp-btn span {{ display: none; }}
                 .btn-group .btn {{ padding: 10px 20px; font-size: 14px; }}
                 .section {{ padding: 15px 5px; }}
+
+                .computer-slideshow {{
+                    padding: 10px 5px;
+                    min-height: 600px;
+                }}
+
                 .computer-slide-content {{
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
                     text-align: center;
-                    padding: 10px;
-                    gap: 20px;
+                    padding: 10px 5px 60px 5px;
+                    gap: 15px;
                 }}
+
                 .computer-slide-image {{
                     max-width: 100%;
                     width: 100%;
@@ -760,18 +767,62 @@ def home(request):
                     align-items: center;
                     margin: 0 auto;
                 }}
+
                 .computer-slide-image img {{
-                    height: 220px;
-                    max-width: 100%;
+                    height: 200px;
+                    max-width: 90%;
                     margin: 0 auto;
                     display: block;
                 }}
+
                 .computer-slide-info {{
                     max-width: 100%;
                     width: 100%;
                     padding: 10px;
                     text-align: center;
                 }}
+
+                .computer-slide-info h3,
+                .computer-slide-info .brand,
+                .computer-slide-info .specs,
+                .computer-slide-info .price {{
+                    text-align: center;
+                }}
+
+                .computer-slide-info .btn-view {{
+                    margin: 15px auto 10px auto;
+                    display: inline-block;
+                    padding: 10px 25px;
+                    font-size: 14px;
+                }}
+
+                /* Move arrow buttons OUTSIDE the content area */
+                .computer-controls {{
+                    padding: 0 5px;
+                    top: auto;
+                    bottom: 10px;
+                    transform: none;
+                    justify-content: space-between;
+                }}
+
+                .computer-btn {{
+                    padding: 8px 14px;
+                    font-size: 18px;
+                    background: rgba(74, 222, 128, 0.9);
+                    color: #1a1a2e;
+                }}
+
+                .computer-slide-info h3 {{ font-size: 20px; }}
+                .computer-slide-info .price {{ font-size: 22px; }}
+                .computer-slide-info .specs {{ font-size: 13px; }}
+                .gallery-slide img {{ height: 250px; }}
+                .gallery-btn {{ padding: 10px 16px; font-size: 20px; }}
+                .gallery-slide .slide-info h4 {{ font-size: 16px; }}
+                .gallery-slide .slide-info {{ padding: 10px; }}
+                .grid {{ grid-template-columns: 1fr; }}
+                }}
+            
+            
                 .computer-slide-info h3,
                 .computer-slide-info .brand,
                 .computer-slide-info .specs,
@@ -791,7 +842,7 @@ def home(request):
                 .gallery-slide .slide-info h4 {{ font-size: 16px; }}
                 .gallery-slide .slide-info {{ padding: 10px; }}
                 .grid {{ grid-template-columns: 1fr; }}
-            }}
+                
         </style>
     </head>
     <body>
