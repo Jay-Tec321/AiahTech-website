@@ -736,112 +736,164 @@ def home(request):
             }}
 
             @media (max-width: 600px) {{
-                .container {{ padding: 0 10px; }}
+                .container {{ padding: 0; margin: 0; text-align: center; width: 100%; }}
                 .subtitle {{ font-size: 18px; }}
                 .logo-img {{ max-width: 130px; }}
                 .menu-btn {{ font-size: 24px; padding: 5px 12px; }}
                 .whatsapp-btn {{ font-size: 18px; padding: 6px 12px; }}
                 .whatsapp-btn span {{ display: none; }}
                 .btn-group .btn {{ padding: 10px 20px; font-size: 14px; }}
-                .section {{ padding: 15px 5px; }}
+    
+                .section {{
+                    margin: 20px 0 0 0;
+                    padding: 0;
+                    width: 100%;
+                    text-align: center;
+                }}
 
                 .computer-slideshow {{
-                    padding: 10px 5px;
-                    min-height: 600px;
+                    position: relative;
+                    max-width: 100%;
+                    width: 100%;
+                    margin: 0;
+                    padding: 0;
+                    padding-bottom: 90px;
+                    overflow: hidden;
+                    box-sizing: border-box;
+                }}
+
+                .computer-slide {{
+                    display: none;
+                    width: 100%;
+                    padding: 0;
+                    margin: 0;
+                    box-sizing: border-box;
+                }}
+
+                .computer-slide.active {{
+                    display: block;
                 }}
 
                 .computer-slide-content {{
+                    display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
                     text-align: center;
-                    padding: 10px 5px 60px 5px;
+                    padding: 0;
+                    margin: 0;
                     gap: 15px;
+                    width: 100%;
+                    box-sizing: border-box;
                 }}
 
                 .computer-slide-image {{
-                    max-width: 100%;
                     width: 100%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     margin: 0 auto;
+                    padding: 0;
                 }}
 
                 .computer-slide-image img {{
                     height: 200px;
-                    max-width: 90%;
+                    width: auto;
+                    max-width: 85%;
                     margin: 0 auto;
                     display: block;
+                    border-radius: 10px;
+                    object-fit: contain;
                 }}
 
                 .computer-slide-info {{
-                    max-width: 100%;
                     width: 100%;
-                    padding: 10px;
+                    padding: 0;
+                    margin: 0 auto;
+                    text-align: center;
+                    box-sizing: border-box;
+                }}
+
+                .computer-slide-info h3 {{
+                    font-size: 22px;
+                    margin: 8px 0;
                     text-align: center;
                 }}
 
-                .computer-slide-info h3,
-                .computer-slide-info .brand,
-                .computer-slide-info .specs,
+                .computer-slide-info .brand {{
+                    font-size: 14px;
+                    margin: 5px 0;
+                    text-align: center;
+                }}
+
+                .computer-slide-info .specs {{
+                    font-size: 13px;
+                    margin: 8px 0;
+                    text-align: center;
+                    line-height: 1.6;
+                    word-wrap: break-word;
+                }}
+
                 .computer-slide-info .price {{
+                    font-size: 26px;
+                    margin: 12px 0;
                     text-align: center;
                 }}
 
                 .computer-slide-info .btn-view {{
-                    margin: 15px auto 10px auto;
+                    margin: 10px auto 15px auto;
                     display: inline-block;
-                    padding: 10px 25px;
-                    font-size: 14px;
+                    padding: 12px 30px;
+                    font-size: 15px;
                 }}
 
-                /* Move arrow buttons OUTSIDE the content area */
+                /* Arrows centered properly */
                 .computer-controls {{
-                    padding: 0 5px;
+                    position: absolute;
+                    bottom: 45px;
+                    left: 0;
+                    right: 0;
                     top: auto;
-                    bottom: 10px;
-                    transform: none;
+                    width: 100%;
+                    display: flex;
                     justify-content: space-between;
+                    transform: none;
+                    padding: 0 20px;
+                    box-sizing: border-box;
+                    z-index: 5;
                 }}
 
                 .computer-btn {{
-                    padding: 8px 14px;
-                    font-size: 18px;
-                    background: rgba(74, 222, 128, 0.9);
+                    padding: 0;
+                    font-size: 22px;
+                    background: rgba(74, 222, 128, 0.95);
                     color: #1a1a2e;
+                    border: 2px solid #1a1a2e;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    width: 45px;
+                    height: 45px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }}
 
-                .computer-slide-info h3 {{ font-size: 20px; }}
-                .computer-slide-info .price {{ font-size: 22px; }}
-                .computer-slide-info .specs {{ font-size: 13px; }}
-                .gallery-slide img {{ height: 250px; }}
-                .gallery-btn {{ padding: 10px 16px; font-size: 20px; }}
-                .gallery-slide .slide-info h4 {{ font-size: 16px; }}
-                .gallery-slide .slide-info {{ padding: 10px; }}
-                .grid {{ grid-template-columns: 1fr; }}
-                }}
-            
-            
-                .computer-slide-info h3,
-                .computer-slide-info .brand,
-                .computer-slide-info .specs,
-                .computer-slide-info .price {{
+                .computer-dots {{
+                    position: absolute;
+                    bottom: 10px;
+                    left: 0;
+                    right: 0;
                     text-align: center;
+                    padding: 0;
+                    margin: 0;
                 }}
-                .computer-slide-info .btn-view {{
-                    margin: 10px auto;
-                    display: inline-block;
-                }}              
-                .computer-slide-info h3 {{ font-size: 20px; }}
-                .computer-slide-info .price {{ font-size: 22px; }}
-                .computer-slide-info .specs {{ font-size: 13px; }}
-                .computer-btn {{ padding: 10px 16px; font-size: 20px; }}
+
                 .gallery-slide img {{ height: 250px; }}
                 .gallery-btn {{ padding: 10px 16px; font-size: 20px; }}
                 .gallery-slide .slide-info h4 {{ font-size: 16px; }}
                 .gallery-slide .slide-info {{ padding: 10px; }}
                 .grid {{ grid-template-columns: 1fr; }}
+            }}
                 
         </style>
     </head>
