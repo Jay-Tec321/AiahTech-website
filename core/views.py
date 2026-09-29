@@ -792,7 +792,9 @@ def home(request):
                 .computer-slide.active {{ display: block; }}
 
                 .computer-slide-content {{
-                    display: block;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
                     text-align: center;
                     padding: 0 10px;
                     margin: 0 auto;
@@ -865,6 +867,8 @@ def home(request):
                     display: inline-block;
                     padding: 10px 25px;
                     font-size: 14px;
+                    text-align: center;
+                    width: auto;
                 }}
 
                 /* ===== ARROWS ON THE SIDES OF THE IMAGE ===== */
@@ -902,6 +906,7 @@ def home(request):
                 .computer-dots {{
                     text-align: center;
                     padding: 10px 0 5px 0;
+                    width: 100%;
                 }}
 
                 .gallery-slide img {{ height: 250px; }}
