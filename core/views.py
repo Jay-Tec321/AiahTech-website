@@ -792,11 +792,9 @@ def home(request):
                 .computer-slide.active {{ display: block; }}
 
                 .computer-slide-content {{
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
+                    display: block;
                     text-align: center;
-                    padding: 0 10px;
+                    padding: 0;
                     margin: 0 auto;
                     width: 100%;
                     max-width: 100%;
